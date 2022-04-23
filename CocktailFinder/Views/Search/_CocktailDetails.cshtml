@@ -43,39 +43,25 @@
             </div>
             <div class="modal-body">
 
-                <form method="put" id="editForm" asp-action="editfavourite" asp-controller="favourite" asp-antiforgery="true">
-                    <div>
-                        <input type="hidden" asp-for="Cocktail.Id" id="id"/>
-                    </div>
-                    <div>
+                <form class="form-group" method="put" id="editForm" asp-action="editfavourite" asp-controller="favourite" asp-antiforgery="true">
+                    <div class="mb-2">
                         <label asp-for="Cocktail.Name"></label>
-                        <input type="text" asp-for="Cocktail.Name" id="Name"/>
+                        <input class="form-control" type="text" asp-for="Cocktail.Name" id="Name"/>
                     </div>
-                    <div>
-                        
-                        <input type="hidden" asp-for="Cocktail.Category" id="category"/>
-                    </div>
-                    <div>
-                        
-                        <input type="hidden" asp-for="Cocktail.Alcoholic" id="alcoholic"/>
-                    </div>
-                    <div>
-                        
-                        <input type="hidden" asp-for="Cocktail.Glass" id="glass"/>
-                    </div>
-                    <div>
-                        <label asp-for="Cocktail.Instructions"></label>
-                        <input type="text" asp-for="Cocktail.Instructions" id="instructions"/>
-                    </div>
-                    <div>
+                    <div class="mb-2">
                         <label asp-for="Cocktail.ImageUrl"></label>
-                        <input type="text" asp-for="Cocktail.ImageUrl" id="imageurl"/>
+                        <input class="form-control" type="text" asp-for="Cocktail.ImageUrl" id="imageurl"/>
                     </div>
-                    <div>
+                    <div class="mb-2">
+                        <label asp-for="Cocktail.Instructions"></label>
+                        <textarea class="form-control" rows="3" type="text" asp-for="Cocktail.Instructions" id="instructions"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
                         <label>Ingredients</label>
                         @foreach (var i in Model.Cocktail.Ingredients)
                         {
-                            <input type="text" asp-for="@i.Name" id="ingredients">
+                            <input class="form-control-sm form-control mb-1" type="text" asp-for="@i.Name" id="ingredients">
                         }
                     </div>
                     <div>

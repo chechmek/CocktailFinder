@@ -46,7 +46,7 @@ namespace CocktailFinder.Controllers
                 _logger.LogError(ex, "Error ocured");
             }
             //Expose the view
-            return View("SearchQuery", searchingModels);
+            return PartialView("SearchQuery", searchingModels);
         }
         //Show one cocktail from public API
         public IActionResult Cocktail(int id) //Sample: www.thecocktaildb.com/api/json/v1/1/lookup.php?i=13940

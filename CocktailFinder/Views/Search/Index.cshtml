@@ -4,11 +4,25 @@
 @{
     ViewData["Title"] = "Search page";
 }
-<div class="container col-md-4 col-md-offset-4 pt-5 align-content-center">
+<div class="container col-md-4 col-md-offset-4 pt-5 align-content-center mb-5">
     <div>Type in ingredient)</div>
-    <form class="" method="get" action="~/search/cocktails">
-        <input name="ingredient" />
-        <input class="btn-success" type="submit" />
+    <form class="" method="get" id="searchForm" >
+        <input id="ingredient" />
+        <input class="btn-success" type="submit" id="searchButton"/>
     </form>
     
 </div>
+<div id="searchQuery">
+
+    </div>
+<script>
+    const searchForm = document.getElementById("searchForm");
+    searchForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let ing = ingredient.value;
+        $("#searchQuery").load('search/cocktails?ingredient='+ingredient.value);
+         
+         console.log("Cocktails with " + ing);
+    });
+    
+</script>
