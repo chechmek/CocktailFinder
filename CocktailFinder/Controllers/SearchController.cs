@@ -77,7 +77,6 @@ namespace CocktailFinder.Controllers
                     //Call api for the cocktail by id
                     cocktail = _cocktailApiProcessor.getCocktailById(id);
                     cocktailVM.Cocktail = cocktail;
-
                 }
             }
             catch (Exception ex)
@@ -87,6 +86,23 @@ namespace CocktailFinder.Controllers
             }
 
             return View("Cocktail", cocktailVM);
+        }
+        public IActionResult RandomCocktail()
+        {
+            CocktailVM cocktailVM = new CocktailVM();
+            try
+            {
+                cocktailVM.Cocktail = _cocktailApiProcessor.getRandomCocktail();
+                cocktailVM.InFavourites = _context.Cocktails.Any(c => c.Id == cocktailVM.Cocktail.Id);
+                
+                return View("Cocktail", cocktailVM);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return View("NotFound", ex.Message);
+            }
+            
         }
 
     }

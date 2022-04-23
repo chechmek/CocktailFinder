@@ -1,5 +1,7 @@
 ﻿@model List<Cocktail>
-
+@{
+    ViewData["Title"] = "Favourites";
+}
 <h2 class="text-warning">Your favourite cocktails:</h2>
 <p>Count: @Model.Count</p>
 @if(Model.Count == 0)

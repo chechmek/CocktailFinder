@@ -40,8 +40,17 @@ namespace CocktailFinder.ApiHelper
 
             return searching;
         }
+        public Cocktail getRandomCocktail()
+        {
+            string url = randomSearchUrl();
+            string response = httpWorker.GetJsonResponse(url).Result;
+            var cocktail = ParseCocktailModel(response);
+
+            return cocktail;
+        }
         private string cocktailSearchUrl(int id) => $"http://www.thecocktaildb.com/api/json/v1/1/lookup.php?i={id}";
         private string ingredientSearchUrl(string i) => @$"http://www.thecocktaildb.com/api/json/v1/1/filter.php?i={i}";
+        private string randomSearchUrl() => @$"http://www.thecocktaildb.com/api/json/v1/1/random.php";
         private List<SearchingModel>? ParseSearchingModel(string json)
         {
             List<SearchingModel> searchingModels = new List<SearchingModel>();

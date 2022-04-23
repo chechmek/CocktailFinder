@@ -5,6 +5,12 @@
     {
         Model.Cocktail = new Cocktail();
         Model.Cocktail.Id = 0;
+        ViewData["Title"] = "";
+    }
+    else
+    {
+        ViewData["Title"] = Model.Cocktail.Name;
+
     }
 }
 
@@ -21,42 +27,42 @@ else
 
 @section Scripts{
 <script type="text/javascript">
-   
-     function AjaxSuccess(result){
-             console.log(result);
-             console.log("AjaxSuccess");
-             location.reload();
-         }
-         function AjaxError(result){
-             console.log(result);
-             console.log("AjaxError");
-             location.reload();
-         }
-     $("#addFavourite").click(function(){
 
-         
-         console.log("addFavourite");
-         $.ajax({
-             type: "POST",
-             url: "@Url.Action("addfavourite","favourite")",
-             data: @Json.Serialize(Model.Cocktail),
-             dataType: "json",
-             success: AjaxSuccess,
-             error: AjaxError
-         });
-     });
+    function AjaxSuccess(result){
+            console.log(result);
+            console.log("AjaxSuccess");
+            location.reload();
+        }
+        function AjaxError(result){
+            console.log(result);
+            console.log("AjaxError");
+            location.reload();
+        }
+    $("#addFavourite").click(function(){
 
-     $("#removeFavourite").click(function(){
-         
-         console.log("removeFavourite");
-         $.ajax({
-             type: "DELETE",
-             url: "@Url.Action("removefavourite","favourite", new{id = Model.Cocktail.Id})",
-             dataType: "json",
-             success: AjaxSuccess,
-             error: AjaxError
-         });
-     });
+
+        console.log("addFavourite");
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("addfavourite","favourite")",
+            data: @Json.Serialize(Model.Cocktail),
+            dataType: "json",
+            success: AjaxSuccess,
+            error: AjaxError
+        });
+    });
+
+    $("#removeFavourite").click(function(){
+
+        console.log("removeFavourite");
+        $.ajax({
+            type: "DELETE",
+            url: "@Url.Action("removefavourite","favourite", new{id = Model.Cocktail.Id})",
+            dataType: "json",
+            success: AjaxSuccess,
+            error: AjaxError
+        });
+    });
 
 
 </script>
