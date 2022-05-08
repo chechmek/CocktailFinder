@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Search page";
+}
+<div class="container col-md-4 col-md-offset-4 pt-5 align-content-center mb-5 ">
+    <div class="d-flex justify-content-center mb-2">Type in ingredient)</div>
+    <form class="form-group d-flex flex-column" method="get" id="searchForm" >
+        <input class="form-control mb-2" style="background-color: white; color: black;" id="ingredient" />
+        <input class="btn-success btn d-flex justify-content-center" type="submit" id="searchButton" value="Search"/>
+    </form>
+</div>
+<div id="searchQuery">
+
+    </div>
+<script>
+    const searchForm = document.getElementById("searchForm");
+    searchForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let ing = ingredient.value;
+        $("#searchQuery").load('search/cocktails?ingredient='+ing.replace(/\s/g, '%20'));
+         console.log("Cocktails with " + ing);
+    });
+    
+</script>

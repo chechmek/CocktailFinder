@@ -1,0 +1,115 @@
+﻿@model CocktailVM
+@{
+}
+<div class="row">
+    <div class="col">
+        <img src="@Model.ImageUrl" class="rounded img-fluid cocktail-image float-right" />
+    </div>
+    <div class="col">
+        <h2>@Model.Name</h2>
+        <div class="text-muted m-0 p-0">
+            <small class="m-0 p-0">
+                <dd>Model.Alcoholic</dd>
+            </small>
+        </div>
+        <p> Ingredients:</p>
+        <ul>
+            @foreach (var i in Model.Ingredients)
+            {
+                <li>@i.Name</li>
+            }
+        </ul>
+        <p>How to do:</p>
+        <div>@Model.Instructions</div>
+        @if (Model.InFavourites)
+        {
+            <button type="button" class="btn btn-primary mt-3" id="removeFavourite">Remove from favourites</button>
+            <button type="button" class="btn btn-success mt-3" data-toggle="modal" data-target="#editModal">Edit</button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-warning mt-3" id="addFavourite">Add to favourites</button>
+        }
+
+    </div>
+
+</div>
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Edit your cocktail</h5>
+                <button class="btn-close" data-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-group" method="put" id="editForm" asp-action="editfavourite" asp-controller="favourite" asp-antiforgery="true">
+                    <input id="id" asp-for="@Model.Id" type="hidden"/>
+                    <input id="category" asp-for="@Model.Category" type="hidden"/>
+                    <input id="alcoholic" asp-for="@Model.Alcoholic" type="hidden"/>
+                    <input id="glass" asp-for="@Model.Glass" type="hidden"/>
+                    <input id="infav" asp-for="@Model.InFavourites" type="hidden"/>
+             
+                    <div class="mb-2">
+                        <label asp-for="@Model.Name"></label>
+                        <input class="form-control" type="text" asp-for="@Model.Name" id="Name"/>
+                    </div>
+                    <div class="mb-2">
+                        <label asp-for="@Model.ImageUrl"></label>
+                        <input class="form-control" type="text" asp-for="@Model.ImageUrl" id="imageurl"/>
+                    </div>
+                    <div class="mb-2">
+                        <label asp-for="@Model.Instructions"></label>
+                        <textarea class="form-control" rows="3" type="text" asp-for="@Model.Instructions" id="instructions"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Ingredients</label>
+                        @foreach (var i in Model.Ingredients)
+                        {
+                            <input class="form-control-sm form-control mb-1" type="text" asp-for="@i.Name" id="ingredients">
+                        }
+                    </div>
+                    <div>
+                        <input class="btn btn-success" type="submit" value="Save" />
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    const editForm = document.getElementById("editForm");
+    editForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        
+        let editData = {
+            Id: id.value,
+            Name: Name.value,
+            Category: category.value,
+            Alcoholic: alcoholic.value,
+            Glass: glass.value,
+            Instructions: instructions.value,
+            ImageUrl: imageurl.value,
+            InFavourites: infav.value,
+            Ingredients: []
+        };
+        console.log(ingredients);
+        for(let i = 0; i < ingredients.length; i++){
+            editData.Ingredients[i] = {Name: ingredients[i].value};
+        }
+        console.log(editData);
+
+        $.ajax({
+                type: "PUT",
+                url: "@Url.Action("editfavourite","favourite")",
+                data: editData,
+                dataType: "json",
+                succes: AjaxSuccess,
+                error: AjaxError
+            });
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

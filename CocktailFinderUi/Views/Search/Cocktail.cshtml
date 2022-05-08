@@ -1,0 +1,59 @@
+﻿@using System.Text.Json
+@model CocktailVM
+@{
+        ViewData["Title"] = Model.Name;
+}
+
+<h1 class="display-3 text-center mb-5">Cocktail info</h1>
+
+@if (@Model is not null)
+{
+    @await Html.PartialAsync("_CocktailDetails", @Model)
+}
+else
+{
+    @await Html.PartialAsync("_CocktailNotFound")
+}
+
+@section Scripts{
+<script type="text/javascript">
+
+    function AjaxSuccess(result){
+            console.log(result);
+            console.log("AjaxSuccess");
+            location.reload();
+        }
+        function AjaxError(result){
+            console.log(result);
+            console.log("AjaxError");
+            location.reload();
+        }
+    $("#addFavourite").click(function(){
+
+
+        console.log("addFavourite");
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("addfavourite","favourite")",
+            data: @Json.Serialize(Model),
+            dataType: "json",
+            success: AjaxSuccess,
+            error: AjaxError
+        });
+    });
+
+    $("#removeFavourite").click(function(){
+
+        console.log("removeFavourite");
+        $.ajax({
+            type: "DELETE",
+            url: "@Url.Action("removefavourite","favourite", new{id = Model.Id})",
+            dataType: "json",
+            success: AjaxSuccess,
+            error: AjaxError
+        });
+    });
+
+
+</script>
+}
